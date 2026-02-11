@@ -1,0 +1,21 @@
+import { resolve } from 'path'
+import { defineConfig } from 'electron-vite'
+import vue from '@vitejs/plugin-vue'
+
+export default defineConfig({
+  main: {},
+  preload: {},
+  renderer: {
+    server: {
+      host: '127.0.0.1',
+      port: 1420,
+      strictPort: true
+    },
+    resolve: {
+      alias: {
+        '@renderer': resolve('src/renderer/src')
+      }
+    },
+    plugins: [vue()]
+  }
+})
