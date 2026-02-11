@@ -52,7 +52,14 @@ jobs:
         with:
           name: ${{ matrix.name }}-artifacts
           path: |
-            dist/**
+            dist/*.exe
+            dist/*.dmg
+            dist/*.zip
+            dist/*.AppImage
+            dist/*.deb
+            dist/*.snap
+            dist/*.blockmap
+            dist/*.yml
           if-no-files-found: error
 
   release:
@@ -67,10 +74,21 @@ jobs:
           path: release-assets
           merge-multiple: true
 
+      - name: List release assets
+        run: ls -la release-assets
+
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
           name: AudioTempo ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
           generate_release_notes: true
-          files: release-assets/**
+          files: |
+            release-assets/*.exe
+            release-assets/*.dmg
+            release-assets/*.zip
+            release-assets/*.AppImage
+            release-assets/*.deb
+            release-assets/*.snap
+            release-assets/*.blockmap
+            release-assets/*.yml
